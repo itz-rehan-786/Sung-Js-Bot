@@ -1,5 +1,5 @@
 //BSD 3-Clause License 
-//Copyright (c) 2023, Yash-Sharma-1807
+//Copyright (c) 2023-2024, Dhruv-Tara
 
 
 const { bot , LOGGER } = require("../index");
