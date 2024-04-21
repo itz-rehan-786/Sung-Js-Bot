@@ -17,12 +17,12 @@ const help = {
 // CONSTANTS //
 
 const Config = {
-    'Token' : "Bot Token here",
+    'Token' : "7001856085:AAEaWUhlxwirEfOnS7JgKOEnwRALTzpfVH4",
     'Start_P' : "https://graph.org//file/6a197da7a1e166e62cbda.jpg",
-    'Support_id' : "Support GROUP",
+    'Support_id' : -1002061632808,
     "Owner" : 5146000168,
     "Help_data" : help,
-    "Mongo_DB" : "Your Mongo Db uri"
+    "Mongo_DB" : "mongodb+srv://imtiazurrehman1122:HAs207933@cluster0.wxy7hze.mongodb.net/?retryWrites=true&w=majority"
 } ;
 
 
