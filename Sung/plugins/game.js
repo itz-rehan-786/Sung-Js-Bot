@@ -1,5 +1,5 @@
 //BSD 3-Clause License 
-//Copyright (c) 2023, Yash-Sharma-1807
+//Copyright (c) 2023-2024, Dhruv-Tara
 
 const { bot , LOGGER } = require("../index");
 const { add_amount , give_won_amount, daily_get_time_remain, daily_update_remain_time, add_user} = require("./database/index");

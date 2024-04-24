@@ -1,5 +1,5 @@
 //BSD 3-Clause License 
-//Copyright (c) 2023, Yash-Sharma-1807
+//Copyright (c) 2023-2024, Dhruv-Tara
 
 const { Start_P } = require("../config")
 const {bot} = require("../index")
@@ -37,6 +37,9 @@ const help_total_keyboard = [[
         text : "User",
         callback_data : "user_help"
     },{
+      text : "Ai",
+      callback_data : "ai_help"
+    },{
         text : "Game",
         callback_data : "game_help"
     }
@@ -70,13 +73,13 @@ bot.command("start", async (ctx) => {
 
       if (ctx.message.text.split(" ")[1] === "help"){
 
-        await ctx.replyWithAnimation("https://graph.org//file/4edd9a1561715bd6a5e99.mp4",{
+        await ctx.replyWithAnimation("CgACAgUAAxkDAANKZJwu03HDH92oVpZM1YnVIy716IUAAnYJAAL0SuFUHoAMRPgdexIvBA",{
           caption : "Hello I'm Sung Jin Woo.\n\nClick on the button below to get description.",
           reply_markup : help_total_markup});
 
       } else{
 
-        await ctx.replyWithAnimation("https://graph.org//file/4edd9a1561715bd6a5e99.mp4",{
+        await ctx.replyWithAnimation("CgACAgUAAxkDAANKZJwu03HDH92oVpZM1YnVIy716IUAAnYJAAL0SuFUHoAMRPgdexIvBA",{
           caption : "Hello I am Sung Jin Woo\nI am under development",
           reply_markup : reply_markup_P
         });};

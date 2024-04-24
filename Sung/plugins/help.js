@@ -1,17 +1,15 @@
 //BSD 3-Clause License 
-//Copyright (c) 2023, Yash-Sharma-1807
+//Copyright (c) 2023-2024, Dhruv-Tara
 
 const { bot,LOGGER } = require("../index")
 
 
-// INLINE KEYBOARDS 
-
-
+// INLINE KEYBOARDS //
 
 const help_group_keyboard = [[
     {
         text : "help",
-        url : "https://t.me/Sung_Jin_Bot?start=help"
+        callback_data : "nigga"
     }
 ]];
 
@@ -25,6 +23,9 @@ const help_total_keyboard = [[
     {
         text : "User",
         callback_data : "user_help"
+    },{
+        text : "Ai",
+        callback_data : "ai_help"
     },{
         text : "Game",
         callback_data : "game_help"

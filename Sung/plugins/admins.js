@@ -1,5 +1,5 @@
 //BSD 3-Clause License 
-//Copyright (c) 2023, Yash-Sharma-1807
+//Copyright (c) 2023-2024, Dhruv-Tara
 
 const { bot,LOGGER } = require("../index");
 const { TelegramError } = require("telegraf")
@@ -28,6 +28,7 @@ async function give_rights(ctx,userid) {
     };
 };
 
+
 /* This func makes the other command based functions easy to make and */
 /* makes them easy to read else every command will have more 10-15 lines of trash code */
 
@@ -36,12 +37,18 @@ async function give_admin_position(ctx , userid , type) {
     try {
         const rights = await give_rights(ctx,userid);
 
-        if (rights["status"] === "creator" || userid === Owner) {
+        if (rights["status"] === "creator" || userid === 5146000168) {
+            
             return true
+        
         } else if (rights["status"] === "administrator") {
+            
             if (type === "can_delete_messages") {
-                return rights["can_delete_messages"]
+                return rights[type];
+            } else if (type === "can_restrict_members") {
+                return rights[type];
             };
+
         } else {
             return null
         };
@@ -219,14 +226,180 @@ bot.command("del", async (ctx) => {
 });
 
 
-// Bans //
+// Bans & Unban //
 
 bot.command("ban", async (ctx) => {
 
     try {
 
+        if (ctx.message.chat.type === "private") {
+
+            await ctx.reply("This is a group only command");
+            return;
+
+        };
+
+        const _bot = await bot.telegram.getMe();
+        const bot_can = await give_admin_position(ctx,_bot.id,"can_restrict_members");
+        const user_can = await give_admin_position(ctx,ctx.message.from.id,"can_restrict_members");
+
+        if (bot_can === null) {
+            await ctx.reply("I am not admin here",{
+                reply_to_message_id : ctx.message.message_id
+            });
+            return;
+        } else if (bot_can === false) {
+            
+            await ctx.reply("I don't have rights.",{
+                reply_to_message_id : ctx.message.message_id
+            });
+            return;
+        };
+
+        if (user_can) {
+            if (ctx.message.reply_to_message) {
+
+                const victim = ctx.message.reply_to_message.from;
+                const banHammerUser = ctx.message.from;
+                
+                if (victim.id === Owner.id) {
+                    await ctx.reply("You can't ban Shadow Monarch",{ 
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+                } else if (victim.id === banHammerUser.id) {
+                    await ctx.reply("You want to ban yourself ?",{
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+                } else if (victim.id === _bot.id) {
+
+                    await ctx.reply("What did I do now ?",{
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+
+                } else if (['creator','administrator'].includes((await ctx.telegram.getChatMember(ctx.chat.id,victim.id)).status) ) {
+                    await ctx.reply("You can't ban an Admin !!",{
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+                };
+
+                await ctx.banChatMember(victim.id);
+                await ctx.reply(`Sucessfully banned ${victim.first_name} from this chat.`);
+                return;
+            } else {
+                
+                await ctx.reply("Reply to a user to ban him from this chat.",{
+                    reply_to_message_id : ctx.message.message_id
+                });
+            };
+        
+        } else if (user_can === null) {
+        
+            await ctx.reply("You are not an Admin.",{
+                reply_to_message_id : ctx.message.message_id
+            });
+        
+        } else {
+            await ctx.reply("You lack Rights.",{
+                reply_to_message_id : ctx.message.message_id
+            });
+        };
+
     } catch (eor) {
         await LOGGER(eor);
     };
-
 });
+
+
+
+
+bot.command("unban", async (ctx) => {
+
+    try {
+
+        const _bot = await bot.telegram.getMe();
+        const bot_can = await give_admin_position(ctx,_bot.id,"can_restrict_members");
+        const user_can = await give_admin_position(ctx,ctx.message.from.id,"can_restrict_members");
+
+        if (ctx.message.chat.type === "private") {
+
+            await ctx.reply("This is a group only command");
+            return;
+
+        };
+
+        if (bot_can === null) {
+            await ctx.reply("I am not admin here",{
+                reply_to_message_id : ctx.message.message_id
+            });
+            return;
+        } else if (bot_can === false) {
+            
+            await ctx.reply("I don't have rights.",{
+                reply_to_message_id : ctx.message.message_id
+            });
+            return;
+        };
+
+        if (user_can) {
+            if (ctx.message.reply_to_message) {
+
+                const victim = ctx.message.reply_to_message.from;
+                const banHammerUser = ctx.message.from;
+                
+                if (victim.id === Owner.id) {
+                    await ctx.reply("Lmao.",{ 
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+                } else if (victim.id === banHammerUser.id) {
+                    await ctx.reply("Nice reply to yourself !",{
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+                } else if (victim.id === _bot.id) {
+
+                    await ctx.reply("Ok like what should I do next ?\nPlay Vodoo with you ?",{
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+
+                } else if (['creator','administrator'].includes((await ctx.telegram.getChatMember(ctx.chat.id,victim.id)).status) ) {
+                    await ctx.reply("Unaban an Admin ?",{
+                        reply_to_message_id : ctx.message.message_id
+                    });
+                    return;
+                };
+
+                await ctx.unbanChatMember(victim.id);
+                await ctx.reply(`Sucessfully unbanned ${victim.first_name} from this chat.`);
+                return;
+            } else {
+                
+                await ctx.reply("Reply to a user to unban him from this chat.",{
+                    reply_to_message_id : ctx.message.message_id
+                });
+            };
+        
+        } else if (user_can === null) {
+        
+            await ctx.reply("You are not an Admin.",{
+                reply_to_message_id : ctx.message.message_id
+            });
+        
+        } else {
+            await ctx.reply("You lack Rights.",{
+                reply_to_message_id : ctx.message.message_id
+            });
+        };
+
+    } catch (eor) {
+        await LOGGER(eor);
+    };
+});
+
+
+ 
