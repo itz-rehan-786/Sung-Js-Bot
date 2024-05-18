@@ -19,11 +19,11 @@ const help = {
 // CONSTANTS //
 
 const Config = {
-    'Token' : "7001856085:AAEaWUhlxwirEfOnS7JgKOEnwRALTzpfVH4",
+    'Token' : "6764625070:AAEJWIDpv9Bt-q_6MyCutJzpnsqiMXVMCyY",
     'Start_P' : "https://graph.org//file/6a197da7a1e166e62cbda.jpg",
-    'Support_id' : -1002061632808,
-    "Owner" : 5146000168,
-    "devs" : [5146000168],
+    'Support_id' : -1001720134719,
+    "Owner" : 2054990632,
+    "devs" : [2054990632],
     "Help_data" : help,
     "Mongo_DB" : "mongodb+srv://imtiazurrehman1122:HAs207933@cluster0.wxy7hze.mongodb.net/?retryWrites=true&w=majority"
 } ;
